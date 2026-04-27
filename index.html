@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IT Act & Rules Navigator — 1961/1962 → 2025/2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f7f3ed;
+  --surface: #ffffff;
+  --ink: #1c1a17;
+  --muted: #7a7060;
+  --border: #ddd5c4;
+  --gold: #9a6f00;
+  --gold-light: #c49a0a;
+  --gold-pale: #fdf3d8;
+  --teal: #005f6b;
+  --teal-light: #007a8a;
+  --teal-pale: #e0f4f7;
+  --red: #8a2020;
+  --red-pale: #fdf0f0;
+  --blue-pale: #e8f0fb;
+  --blue: #1a4a8a;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+}
+
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: radial-gradient(circle at 20% 20%, rgba(154,111,0,0.04) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(0,95,107,0.04) 0%, transparent 50%);
+  pointer-events: none; z-index: 0;
+}
+
+.page { position: relative; z-index: 1; max-width: 920px; margin: 0 auto; padding: 0 20px; }
+
+/* ── HEADER ── */
+header {
+  padding: 36px 0 0;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 28px;
+}
+
+.logo-row {
+  display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 12px;
+}
+
+.logo-circle {
+  width: 52px; height: 52px; border-radius: 50%;
+  border: 2px solid var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  background: linear-gradient(135deg, var(--gold-pale), #fff8e6);
+  box-shadow: 0 2px 12px rgba(154,111,0,0.15);
+  flex-shrink: 0;
+}
+
+h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(26px, 4vw, 42px);
+  font-weight: 700; line-height: 1.1; color: var(--ink);
+}
+h1 em { font-style: italic; color: var(--gold); }
+
+.tagline {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--muted); margin-top: 8px;
+}
+
+.source-row {
+  display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 14px;
+}
+
+.badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 4px 12px; border-radius: 20px;
+  font-size: 10px; font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.06em; text-transform: uppercase;
+}
+.badge-gold { background: var(--gold-pale); border: 1px solid #e0c060; color: var(--gold); }
+.badge-teal { background: var(--teal-pale); border: 1px solid #80ccd4; color: var(--teal); }
+.badge::before { content: '✓'; font-weight: bold; }
+
+/* ── TABS ── */
+.tab-bar {
+  display: flex; gap: 0; margin: 28px 0 0;
+  border-bottom: 2px solid var(--border);
+}
+
+.tab-btn {
+  padding: 12px 28px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500;
+  border: none; background: transparent; cursor: pointer; color: var(--muted);
+  border-bottom: 3px solid transparent; margin-bottom: -2px;
+  transition: all 0.2s; letter-spacing: 0.02em; white-space: nowrap;
+}
+.tab-btn:hover { color: var(--ink); }
+.tab-btn.active-act { color: var(--gold); border-bottom-color: var(--gold); }
+.tab-btn.active-rules { color: var(--teal); border-bottom-color: var(--teal); }
+.tab-btn .tab-count {
+  display: inline-block; padding: 1px 7px; border-radius: 10px;
+  font-size: 10px; margin-left: 6px; font-family: 'JetBrains Mono', monospace;
+}
+.tab-btn.active-act .tab-count { background: var(--gold-pale); color: var(--gold); }
+.tab-btn.active-rules .tab-count { background: var(--teal-pale); color: var(--teal); }
+
+/* ── PANELS ── */
+.panel { display: none; padding: 28px 0; }
+.panel.visible { display: block; }
+
+/* ── SEARCH BOX ── */
+.search-label {
+  font-family: 'Cormorant Garamond', serif; font-size: 13px; font-style: italic;
+  color: var(--muted); margin-bottom: 10px; display: block;
+}
+
+.search-row { display: flex; gap: 0; border-radius: 4px; overflow: hidden; }
+
+.search-wrap {
+  flex: 1; position: relative;
+  border: 2px solid var(--ink); border-right: none;
+  border-radius: 4px 0 0 4px; background: white;
+  transition: border-color 0.2s;
+}
+.search-wrap:focus-within { border-color: var(--gold); }
+.search-wrap.teal:focus-within { border-color: var(--teal); }
+
+.search-wrap input {
+  width: 100%; padding: 14px 18px; font-size: 17px;
+  font-family: 'JetBrains Mono', monospace; border: none; outline: none; background: transparent;
+  color: var(--ink); letter-spacing: 0.04em;
+}
+.search-wrap input::placeholder {
+  color: #bbb; font-style: italic; font-family: 'DM Sans', sans-serif;
+  font-size: 14px; letter-spacing: 0;
+}
+
+.search-btn {
+  padding: 14px 26px; font-family: 'JetBrains Mono', monospace; font-size: 12px;
+  letter-spacing: 0.1em; text-transform: uppercase; border: 2px solid var(--ink);
+  border-left: none; cursor: pointer; transition: all 0.2s; white-space: nowrap;
+  border-radius: 0 4px 4px 0;
+}
+.search-btn-act { background: var(--ink); color: var(--bg); }
+.search-btn-act:hover { background: var(--gold); border-color: var(--gold); }
+.search-btn-rules { background: var(--ink); color: var(--bg); }
+.search-btn-rules:hover { background: var(--teal); border-color: var(--teal); }
+
+/* quick chips */
+.chips { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 14px; }
+.chip-label { font-size: 10px; font-family: 'JetBrains Mono', monospace; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+.chip {
+  padding: 4px 11px; border-radius: 2px; font-size: 11px;
+  font-family: 'JetBrains Mono', monospace; cursor: pointer; background: white;
+  transition: all 0.15s; letter-spacing: 0.02em;
+}
+.chip-act { border: 1px solid var(--border); color: var(--gold); }
+.chip-act:hover { background: var(--gold); color: white; border-color: var(--gold); }
+.chip-rules { border: 1px solid var(--border); color: var(--teal); }
+.chip-rules:hover { background: var(--teal); color: white; border-color: var(--teal); }
+
+/* ── RESULT ── */
+.result-wrap { margin: 20px 0 0; opacity: 0; transform: translateY(8px); transition: all 0.3s; }
+.result-wrap.show { opacity: 1; transform: translateY(0); }
+
+.result-card {
+  border: 2px solid var(--ink); border-radius: 4px; overflow: hidden;
+  box-shadow: 5px 5px 0 var(--ink);
+}
+.result-card.act-card { box-shadow: 5px 5px 0 var(--gold); border-color: var(--gold); }
+.result-card.rules-card { box-shadow: 5px 5px 0 var(--teal); border-color: var(--teal); }
+.result-card.warn-card { box-shadow: 5px 5px 0 var(--red); border-color: var(--red); }
+
+.result-head {
+  padding: 12px 22px; font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px;
+}
+.result-head.act-head { background: var(--gold); color: white; }
+.result-head.rules-head { background: var(--teal); color: white; }
+.result-head.warn-head { background: var(--red); color: white; }
+.result-head.not-head { background: var(--ink); color: var(--bg); }
+
+.result-body { background: white; padding: 24px 28px; }
+
+.map-grid {
+  display: grid; grid-template-columns: 1fr 48px 1fr; gap: 16px; align-items: center;
+}
+
+.sec-block { padding: 18px; border-radius: 3px; }
+.sec-block.old-block { background: #f8f5ef; border: 1px solid var(--border); }
+.sec-block.new-block-act { background: var(--gold-pale); border: 2px solid var(--gold); }
+.sec-block.new-block-rules { background: var(--teal-pale); border: 2px solid var(--teal); }
+
+.sec-tag { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; }
+.sec-num { font-family: 'Cormorant Garamond', serif; font-size: 34px; font-weight: 700; line-height: 1; margin-bottom: 5px; }
+.sec-num-act { color: var(--gold); }
+.sec-num-rules { color: var(--teal); }
+.sec-title { font-size: 12px; color: var(--muted); line-height: 1.5; font-style: italic; }
+
+.arrow-col { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.arrow-svg-act { color: var(--gold); }
+.arrow-svg-rules { color: var(--teal); }
+.arrow-text { font-family: 'JetBrains Mono', monospace; font-size: 8px; color: var(--muted); letter-spacing: 0.1em; text-align: center; }
+
+.result-note {
+  margin-top: 18px; padding: 12px 16px;
+  border-left: 3px solid var(--border); font-size: 12px; color: var(--muted);
+  line-height: 1.65; font-style: italic; background: #f9f7f3;
+}
+.result-note strong { color: var(--ink); font-style: normal; }
+
+.status-pill {
+  display: inline-block; padding: 3px 10px; border-radius: 2px;
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; margin-top: 8px;
+}
+.pill-redundant { background: #fff3cd; color: #856404; border: 1px solid #ffc107; }
+.pill-omitted   { background: #f8d7da; color: #842029; border: 1px solid #f5c2c7; }
+.pill-schedule  { background: var(--blue-pale); color: var(--blue); border: 1px solid #9ec5fe; }
+.pill-new       { background: #d1e7dd; color: #0a3622; border: 1px solid #a3cfbb; }
+
+/* multi */
+.multi-list { display: flex; flex-direction: column; gap: 10px; }
+.multi-item {
+  display: flex; gap: 14px; align-items: flex-start;
+  padding: 13px 16px; border: 1px solid var(--border); border-radius: 3px;
+  background: #fdfaf5; cursor: pointer; transition: background 0.15s;
+}
+.multi-item:hover { background: var(--gold-pale); }
+.multi-item.teal-item:hover { background: var(--teal-pale); }
+.multi-num { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 500; white-space: nowrap; min-width: 90px; }
+.multi-num-act { color: var(--gold); }
+.multi-num-rules { color: var(--teal); }
+.multi-info { flex: 1; }
+.multi-sub { font-size: 11px; color: var(--muted); font-style: italic; margin-top: 2px; }
+
+/* ── BROWSE TABLE ── */
+.browse-head { margin-bottom: 6px; }
+.browse-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; }
+.browse-sub { font-size: 12px; color: var(--muted); margin-bottom: 16px; }
+
+.filter-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+.filter-btn {
+  padding: 5px 13px; border-radius: 2px; font-size: 11px;
+  font-family: 'JetBrains Mono', monospace; cursor: pointer; background: white;
+  color: var(--ink); transition: all 0.15s; letter-spacing: 0.05em;
+}
+.filter-btn { border: 1px solid var(--border); }
+.filter-btn:hover { border-color: var(--ink); }
+.filter-btn.fa { border-color: var(--gold); }
+.filter-btn.fa.on { background: var(--gold); color: white; }
+.filter-btn.fr { border-color: var(--teal); }
+.filter-btn.fr.on { background: var(--teal); color: white; }
+
+.browse-search {
+  width: 100%; padding: 9px 14px; border: 1px solid var(--border);
+  border-radius: 3px; font-family: 'JetBrains Mono', monospace;
+  font-size: 12px; outline: none; margin-bottom: 10px; background: white;
+  transition: border-color 0.2s;
+}
+.browse-search:focus { border-color: var(--gold); }
+
+.row-count { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--muted); margin-bottom: 8px; letter-spacing: 0.06em; }
+
+.table-wrap { border: 1px solid var(--border); border-radius: 3px; overflow: hidden; max-height: 460px; overflow-y: auto; }
+
+table { width: 100%; border-collapse: collapse; font-size: 12px; }
+thead th {
+  background: var(--ink); color: var(--bg); padding: 10px 14px; text-align: left;
+  font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.15em;
+  text-transform: uppercase; font-weight: 400; position: sticky; top: 0; z-index: 2;
+}
+.th-type { width: 60px; }
+.th-old { width: 100px; }
+.th-desc { }
+.th-new { width: 130px; }
+
+tbody tr { border-bottom: 1px solid #ede8df; cursor: pointer; transition: background 0.1s; }
+tbody tr:hover { background: var(--gold-pale); }
+tbody tr.teal-row:hover { background: var(--teal-pale); }
+tbody tr:last-child { border-bottom: none; }
+
+td { padding: 9px 14px; vertical-align: middle; }
+td.td-type { font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 500; }
+td.td-old { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500; white-space: nowrap; }
+td.td-desc { font-style: italic; color: var(--muted); font-size: 11px; }
+td.td-new { font-family: 'JetBrains Mono', monospace; font-size: 11px; white-space: nowrap; }
+
+.tag-act { color: var(--gold); }
+.tag-rules { color: var(--teal); }
+.tag-redundant { color: #856404; }
+.tag-omitted { color: #842029; }
+.tag-new-rule { color: #0a3622; }
+.type-act { color: var(--gold); background: var(--gold-pale); padding: 2px 6px; border-radius: 2px; }
+.type-rules { color: var(--teal); background: var(--teal-pale); padding: 2px 6px; border-radius: 2px; }
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid var(--border); padding: 18px 0; text-align: center;
+  font-size: 10px; color: var(--muted); font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.07em; margin-top: 20px;
+}
+
+@media(max-width:600px){
+  .map-grid { grid-template-columns: 1fr; }
+  .arrow-col { transform: rotate(90deg); margin: 8px 0; }
+  .tab-btn { padding: 10px 14px; font-size: 12px; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<header>
+  <div class="logo-row">
+    <div class="logo-circle">⚖</div>
+    <div>
+      <h1>IT Act & Rules <em>Navigator</em></h1>
+      <div class="tagline">Official Provision Cross-Reference · 1961/1962 → 2025/2026</div>
+    </div>
+  </div>
+  <div class="source-row">
+    <span class="badge badge-gold">Act: CBDT Navigator PDF · incometaxindia.gov.in</span>
+    <span class="badge badge-teal">Rules: CBDT Navigator PDF · incometaxindia.gov.in</span>
+  </div>
+</header>
+
+<div class="tab-bar">
+  <button class="tab-btn active-act" onclick="switchTab('act',this)" id="tab-act">
+    ⚖ Act Sections <span class="tab-count" id="cnt-act">500+</span>
+  </button>
+  <button class="tab-btn" onclick="switchTab('rules',this)" id="tab-rules">
+    📋 Rules <span class="tab-count" id="cnt-rules">333</span>
+  </button>
+  <button class="tab-btn" onclick="switchTab('browse',this)" id="tab-browse">
+    🔍 Browse All
+  </button>
+</div>
+
+<!-- ══════════ ACT PANEL ══════════ -->
+<div class="panel visible" id="panel-act">
+  <label class="search-label">Enter section number from Income Tax Act, 1961</label>
+  <div class="search-row">
+    <div class="search-wrap">
+      <input type="text" id="actInput" placeholder="e.g. 111A, 80C, 139, 10(38)…" autocomplete="off" spellcheck="false">
+    </div>
+    <button class="search-btn search-btn-act" onclick="searchAct()">Find →</button>
+  </div>
+  <div class="chips">
+    <span class="chip-label">Try:</span>
+    <span class="chip chip-act" onclick="quickAct('111A')">111A</span>
+    <span class="chip chip-act" onclick="quickAct('80C')">80C</span>
+    <span class="chip chip-act" onclick="quickAct('139')">139</span>
+    <span class="chip chip-act" onclick="quickAct('44AB')">44AB</span>
+    <span class="chip chip-act" onclick="quickAct('112A')">112A</span>
+    <span class="chip chip-act" onclick="quickAct('9')">9</span>
+    <span class="chip chip-act" onclick="quickAct('195')">195</span>
+    <span class="chip chip-act" onclick="quickAct('234A')">234A</span>
+    <span class="chip chip-act" onclick="quickAct('45')">45</span>
+    <span class="chip chip-act" onclick="quickAct('115BAC')">115BAC</span>
+  </div>
+  <div class="result-wrap" id="act-result"></div>
+</div>
+
+<!-- ══════════ RULES PANEL ══════════ -->
+<div class="panel" id="panel-rules">
+  <label class="search-label">Enter rule number from Income Tax Rules, 1962</label>
+  <div class="search-row">
+    <div class="search-wrap teal">
+      <input type="text" id="rulesInput" placeholder="e.g. 3, 6DD, 10A, 114B, 128…" autocomplete="off" spellcheck="false">
+    </div>
+    <button class="search-btn search-btn-rules" onclick="searchRules()">Find →</button>
+  </div>
+  <div class="chips">
+    <span class="chip-label">Try:</span>
+    <span class="chip chip-rules" onclick="quickRules('3')">3</span>
+    <span class="chip chip-rules" onclick="quickRules('6DD')">6DD</span>
+    <span class="chip chip-rules" onclick="quickRules('10A')">10A</span>
+    <span class="chip chip-rules" onclick="quickRules('114')">114</span>
+    <span class="chip chip-rules" onclick="quickRules('128')">128</span>
+    <span class="chip chip-rules" onclick="quickRules('10D')">10D</span>
+    <span class="chip chip-rules" onclick="quickRules('31')">31</span>
+    <span class="chip chip-rules" onclick="quickRules('30')">30</span>
+    <span class="chip chip-rules" onclick="quickRules('12')">12</span>
+    <span class="chip chip-rules" onclick="quickRules('115')">115</span>
+  </div>
+  <div class="result-wrap" id="rules-result"></div>
+</div>
+
+<!-- ══════════ BROWSE PANEL ══════════ -->
+<div class="panel" id="panel-browse">
+  <div class="browse-head">
+    <div class="browse-title">Browse Complete Mapping</div>
+    <div class="browse-sub">All sections (Act 1961→2025) and rules (Rules 1962→2026) from official CBDT Navigator PDFs</div>
+  </div>
+  <div class="filter-row" id="browse-filters">
+    <button class="filter-btn fa on" onclick="toggleFilter('act',this)">⚖ Act Sections</button>
+    <button class="filter-btn fr on" onclick="toggleFilter('rules',this)">📋 Rules</button>
+    <button class="filter-btn" onclick="filterStatus('all')">All</button>
+    <button class="filter-btn" onclick="filterStatus('mapped')">Mapped</button>
+    <button class="filter-btn" onclick="filterStatus('redundant')">Redundant</button>
+    <button class="filter-btn" onclick="filterStatus('omitted')">Omitted</button>
+    <button class="filter-btn" onclick="filterStatus('new')">New Rules</button>
+  </div>
+  <input type="text" class="browse-search" id="browseSearch" placeholder="Search old number, keyword, or new number…" oninput="renderBrowse()">
+  <div class="row-count" id="browse-count"></div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="th-type">Type</th>
+          <th class="th-old">Old (1961/1962)</th>
+          <th class="th-desc">Description</th>
+          <th class="th-new">New (2025/2026)</th>
+        </tr>
+      </thead>
+      <tbody id="browse-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<footer>
+  Income Tax Act 1961 → 2025 · Income Tax Rules 1962 → 2026 · Official CBDT Navigator PDFs · For reference only · Ministry of Finance, Government of India
+</footer>
+
+</div><!-- /page -->
+
+<script>
+// ═══════════════════════════════════════════════════════
+// ACT MAPPING  (Section 1961 → Section 2025)
+// Source: CBDT new-bill-2025-navigator.pdf
+// ═══════════════════════════════════════════════════════
+const ACT = [
+  ["1","Short title, extent and commencement","1"],["2","Definitions","2"],["2(15)(Proviso)","Definitions","346"],["3","Previous year defined","3"],["4","Charge of income-tax","4"],["5","Scope of total income","5"],["5A","Apportionment of income between spouses governed by Portuguese Civil Code","10"],["6","Residence in India","6"],["7","Income deemed to be received","7(1)"],["8","Dividend income","7(2)"],["9","Income deemed to accrue or arise in India","9"],["9A","Certain activities not to constitute business connection in India","9(12)"],["9B","Income on receipt of capital asset or stock in trade by specified person from specified entity","8"],["10","Incomes not included in total income","11"],["10(1)","Agricultural income","Schedule II(Table: S.No.1)"],["10(2)","Any sum received by a member from Hindu undivided family","Schedule III(Table: S.No.1)"],["10(2A)","Any sum received by a partner towards his share in the total income of the firm","Schedule III(Table: S.No.2)"],["10(4)(ii)","Any income by way of interest in NRE account","Schedule IV(Table: S.No.1)"],["10(4D)","Any income accrued/arisen as a result of transfer of capital asset referred to in section 47(viiiab)","Schedule VI(Table: S.No.1)"],["10(5)","The value of any travel concession or assistance","Schedule III(Table: S.No.8)"],["10(10BC)","Any amount received from Government by way of compensation on account of any disaster","Schedule III(Table: S.No.3)"],["10(10CC)","Income in the nature of a perquisite","Schedule III(Table: S.No.10)"],["10(10D)","Any sum received under a life insurance policy","Schedule II(Table: S.No.2)"],["10(11)","Any amount payable from a provident fund","Schedule II(Table: S.No.3)"],["10(11A)","Any payment from any account opened under Sukanya Samriddhi Account Rules","Schedule II(Table: S.No.5)"],["10(12)","The accumulated balance due and becoming payable to an employee in a recognised provident fund","Schedule II(Table: S.No.4)"],["10(12A)","Any payment from the National Pension System Trust","Schedule II(Table: S.No.6)"],["10(12B)","Any payment from the NPS Trust under pension scheme","Schedule III(Table: S.No.4)"],["10(12C)","Any payment from the Agniveer Corpus Fund","Schedule II(Table: S.No.7)"],["10(13)","Any payment from an approved superannuation fund","Schedule II(Table: S.No.8)"],["10(13A)","Any special allowance from employer","Schedule III(Table: S.No.11)"],["10(16)","Scholarships","Schedule II(Table: S.No.9)"],["10(17A)","Any payment made for any award or reward","Schedule II(Table: S.No.10)"],["10(33)","Any income arising from the transfer of a capital asset being a unit of the Unit Scheme, 1964","Schedule II(Table: S.No.14)"],["10(37)","Capital gains arising from the transfer of agricultural land","Schedule III(Table: S.No.18)"],["10A","Special provision in respect of newly established undertakings in free trade zone","Redundant"],["10AA","Special provisions in respect of newly established Units in Special Economic Zones","144"],["10B","Special provisions in respect of newly established hundred per cent export-oriented undertakings","Redundant"],["13A","Special provision relating to incomes of political parties","12"],["13B","Special provisions relating to voluntary contributions received by electoral trust","12"],["14","Heads of Income","13"],["14A","Expenditure incurred in relation to income not includible in total income","14"],["15","Salaries","15"],["16","Deductions from salaries","19"],["17(1)","Salary defined","16"],["17(2)","Perquisite defined","17"],["17(3)","Profits in lieu of salary defined","18"],["22","Income from house property","20"],["23","Annual value how determined","21"],["24","Deductions from income from house property","22"],["25","Amounts not deductible from income from house property","23"],["25A","Special provision for arrears of rent and unrealised rent received subsequently","23"],["26","Property owned by co-owners","24"],["27","Owner of house property, annual charge, etc., defined","25"],["28","Profits and gains of business or profession","26"],["29","Manner of computing profits and gains of business or profession","27"],["30","Rent, rates, taxes, repairs and insurance for buildings","28"],["31","Repairs and insurance of machinery, plant and furniture","28"],["32","Depreciation","33"],["32A","Investment Allowance","Redundant"],["32AB","Investment deposit account","Redundant"],["32AC","Investment in new plant or machinery","Redundant"],["33","Development Rebate","Redundant"],["35","Expenditure on scientific research","45"],["35AD","Deduction in respect of expenditure on specified business","46"],["35CCC","Expenditure on agricultural extension project","47"],["35CCD","Expenditure on skill development project","47"],["35D","Amortisation of certain preliminary expenses","44"],["35DD","Amortisation of expenditure in case of amalgamation or demerger","52"],["35DDA","Amortisation of expenditure incurred under voluntary retirement scheme","52"],["35E","Deduction for expenditure on prospecting for certain minerals","51"],["36","Other Deductions","29, 30, 31, 32"],["37","General","34"],["38","Building partly used for business","28, 33"],["40","Amounts not deductible","35"],["40A","Expenses or payments not deductible in certain circumstances","29, 32, 36"],["41","Profits chargeable to tax","38"],["43","Definitions of certain terms relevant to income from profits and gains of business or profession","39, 41, 66"],["43A","Special provisions consequential to change in rate of exchange of currency","42"],["43AA","Taxation of foreign exchange fluctuation","43"],["43B","Certain deductions to be only on actual payments","37"],["43C","Special provision for computation of cost of acquisition of certain assets","40"],["43CA","Special provision for full value of consideration for transfer of assets","53"],["43CB","Computation of income from construction and service contracts","57"],["43D","Special provision in case of income of public financial institutions","56"],["44","Insurance business","55"],["44A","Special provision in the case of trade, profession or similar association","50"],["44AA","Maintenance of accounts by certain persons carrying on profession or business","62"],["44AB","Audit of accounts by certain persons carrying on profession or business","63"],["44AD","Special provision for computing profits and gains of business on presumptive basis","58"],["44ADA","Special provision for computing profits and gains of profession on presumptive basis","58"],["44AE","Special provision for computing profits and gains of business of plying, hiring or leasing goods carriages","58"],["44B","Special provision for computing profits and gains of shipping business in the case of non-residents","61"],["44BB","Special provision for computing profits and gains in connection with business of exploration of mineral oils","61"],["44BBA","Special provision for computing profits and gains of the business of operation of aircraft in the case of non-residents","61"],["44BBB","Special provision for computing profits and gains of foreign companies engaged in the business of civil constructions in certain turnkey power projects","61"],["44BBC","Special provision for computing profits and gains of the business of operation of cruise ships in the case of non-residents","61"],["44C","Deduction of head office expenditure in the case of non-residents","60"],["44DA","Special provision for computing income by way of royalties in the case of non-residents","59"],["44DB","Special provision for computing deductions in case of business reorganization of co-operative banks","65"],["45","Capital gains","67"],["46","Capital gains on distribution of assets by companies in liquidation","68"],["46A","Capital gains on purchase by company of its own shares or other specified securities","69"],["47","Transactions not regarded as transfer","70"],["47A","Withdrawal of exemption in certain cases","71"],["48","Mode of computation of capital gains","72"],["49","Cost with reference to certain modes of acquisition","73"],["50","Special provision for computation of capital gains in case of depreciable assets","74"],["50A","Special provision for cost of acquisition in case of depreciable asset","75"],["50AA","Special provision for computation of capital gains in case of Market Linked Debenture","76"],["50B","Special provision for computation of capital gains in case of slump sale","77"],["50C","Special provision for full value of consideration in certain cases","78"],["50CA","Special provision for full value of consideration for transfer of share other than quoted share","79"],["50D","Fair market value considered to be full value of consideration in certain cases","80"],["51","Advance money received","81"],["54","Profit on sale of property used for residence","82"],["54B","Capital gains on transfer of land used for agricultural purposes not to be charged in certain cases","83"],["54D","Capital gains on compulsory acquisition of lands and buildings not to be charged in certain cases","84"],["54EC","Capital gains not to be charged on investment in certain bonds","85"],["54F","Capital gains on transfer of certain capital assets not to be charged in case of investment in residential house","86"],["54G","Exemption of capital gains on transfer of assets in cases of shifting of industrial undertaking from urban area","87"],["54GA","Exemption of capital gains on transfer of assets in cases of shifting of industrial undertaking to Special Economic Zone","88"],["54H","Extension of time for acquiring new asset or depositing or investing amount of capital gains","89"],["55","Meaning of adjusted, cost of improvement and cost of acquisition","90"],["55A","Reference to Valuation Officer","91"],["56","Income from other sources","92"],["57","Deductions","93"],["58","Amounts not deductible","94"],["59","Profits chargeable to tax","95"],["60","Transfer of income where there is no transfer of assets","96"],["61","Revocable transfer of assets","97"],["62","Transfer irrevocable for a specified period","97"],["63","Transfer and revocable transfer defined","98"],["64","Income of individual to include income of spouse, minor child, etc.","99"],["65","Liability of person in respect of income included in the income of another person","100"],["66","Total income","101"],["68","Cash credits","102"],["69","Unexplained investments","103"],["69A","Unexplained money, etc.","104"],["69B","Amount of investments not fully disclosed in books of account","103, 104"],["69C","Unexplained expenditure, etc.","105"],["69D","Amount borrowed or repaid on hundi","106"],["70","Set off of loss from one source against income from another source under the same head of income","108"],["71","Set off of loss from one head against income from another","109"],["71B","Carry forward and set off of loss from house property","110"],["72","Carry forward and set off of business losses","112"],["72A","Provisions relating to carry forward and set off of accumulated loss and unabsorbed depreciation allowance in amalgamation or demerger","116"],["72AA","Carry forward and set off of accumulated loss and unabsorbed depreciation allowance in scheme of amalgamation in certain cases","117"],["72AB","Provisions relating to carry forward and set-off in business reorganisation of co-operative banks","118"],["73","Losses in speculation business","113"],["73A","Carry forward and set off of losses by specified business","114"],["74","Losses under the head Capital gains","111"],["74A","Losses from certain specified sources falling under the head Income from other sources","115"],["78","Carry forward and set off of losses in case of change in constitution of firm or on succession","119"],["79","Carry forward and set off of losses in case of certain companies","119"],["79A","No set off of losses consequent to search, requisition and survey","120"],["80","Submission of return for losses","121"],["80A","Deductions to be made in computing total income","122"],["80C","Deduction for insurance premia, deferred annuity, contributions to provident fund, etc.","123"],["80CCC","Deduction in respect of contribution to certain pension funds","Omitted"],["80CCD","Deduction in respect of employer contribution to pension scheme of Central Government","124"],["80CCH","Deduction in respect of contribution to Agnipath Scheme","125"],["80D","Deduction in respect of health insurance premia","126"],["80DD","Deduction in respect of maintenance including medical treatment of a dependant who is a person with disability","127"],["80DDB","Deduction in respect of medical treatment, etc.","128"],["80E","Deduction in respect of interest on loan taken for higher education","129"],["80EE","Deduction in respect of interest on loan taken for certain house property","130"],["80EEA","Deduction in respect of interest on loan taken for certain house property","131"],["80EEB","Deduction in respect of purchase of electric vehicle","132"],["80G","Deduction in respect of donations to certain funds, charitable institutions, etc.","133"],["80GG","Deductions in respect of rents paid","134"],["80GGA","Deduction in respect of certain donations for scientific research or rural development","135"],["80GGB","Deduction in respect of contributions given by companies to political parties","136"],["80GGC","Deduction in respect of contributions given by any person to political parties","137"],["80-IA","Deductions in respect of profits and gains from industrial undertakings or enterprises engaged in infrastructure development","138"],["80-IAB","Deductions in respect of profits and gains by an undertaking or enterprise engaged in development of Special Economic Zone","139"],["80-IAC","Special provision in respect of specified business","140"],["80-IB","Deduction in respect of profits and gains from certain industrial undertakings","141"],["80-IBA","Deductions in respect of profits and gains from housing projects","142"],["80-IE","Special provisions in respect of certain undertakings in North-Eastern States","143"],["80JJA","Deduction for businesses engaged in collecting and processing of bio-degradable waste","145"],["80JJAA","Deduction in respect of additional employee cost","146"],["80LA","Deductions for income of Offshore Banking Units and Units of International Financial Services Centre","147"],["80M","Deduction in respect of certain inter-corporate dividends","148"],["80P","Deduction in respect of income of co-operative societies","149"],["80PA","Deduction in respect of certain income of Producer Companies","150"],["80QQB","Deduction in respect of royalty income of authors of certain books other than text-books","151"],["80RRB","Deduction in respect of royalty on patents","152"],["80TTA","Deduction for Interest on Deposits","153"],["80TTB","Deduction in respect of interest on deposits in case of senior citizens","Omitted"],["80U","Deduction in case of a person with disability","154"],["86","Share of member of an association of persons or body of individuals in the income of association or body","310"],["87","Rebate to be allowed in computing income-tax","155"],["87A","Rebate of income-tax in case of certain individuals","156"],["89","Relief when salary, etc., is paid in arrears or in advance","157"],["89A","Relief from taxation in income from retirement benefit account maintained in a notified country","158"],["90","Agreement with foreign countries or specified territories","159"],["90A","Adoption by Central Government of agreement between specified associations for double taxation relief","159"],["91","Countries with which no agreement exists","160"],["92","Computation of income from international transaction having regard to arm's length price","161"],["92A","Meaning of associated enterprise","162"],["92B","Meaning of international transaction","163"],["92BA","Meaning of specified domestic transaction","164"],["92C","Computation of arm's length price","165"],["92CA","Reference to Transfer Pricing Officer","166"],["92CB","Power of Board to make safe harbour rules","167"],["92CC","Advance pricing agreement","168"],["92CD","Effect to advance pricing agreement","169"],["92CE","Secondary adjustment in certain cases","170"],["92D","Maintenance, keeping and furnishing of information and document by certain persons","171"],["92E","Report from an accountant to be furnished by persons entering into international transaction","172"],["92F","Definitions of certain terms relevant to computation of arm's length price","173"],["93","Avoidance of income-tax by transactions resulting in transfer of income to non-residents","174"],["94","Avoidance of tax by certain transactions in securities","175"],["94A","Special measures in respect of transactions with persons located in notified jurisdictional area","176"],["94B","Limitation on interest deduction in certain cases","177"],["95","Applicability of General Anti-Avoidance Rule","178"],["96","Impermissible avoidance arrangement","179"],["97","Arrangement to lack commercial substance","180"],["98","Consequences of impermissible avoidance arrangement","181"],["99","Treatment of connected person and accommodating party","182"],["110","Determination of tax where total income includes income on which no tax is payable","190"],["111","Tax on accumulated balance of recognised provident fund","191"],["111A","Tax on short-term capital gains in certain cases","196"],["112","Tax on long-term capital gains","197"],["112A","Tax on long-term capital gains in certain cases","198"],["113","Tax in the case of block assessment of search cases","192"],["115A","Tax on dividends, royalty and technical service fees in case of foreign companies","207"],["115AB","Tax on income from units purchased in foreign currency","208"],["115AC","Tax on income from bonds or Global Depository Receipts purchased in foreign currency","209"],["115ACA","Tax on income from Global Depository Receipts purchased in foreign currency","193"],["115AD","Tax on income of Foreign Institutional Investors from securities","210"],["115BA","Tax on income of certain manufacturing domestic companies","199"],["115BAA","Tax on income of certain domestic companies","200"],["115BAB","Tax on income of new manufacturing domestic companies","201"],["115BAC","Tax on income of individuals Hindu undivided family and others","202"],["115BAD","Tax on income of certain resident co-operative societies","203"],["115BAE","Tax on income of certain new manufacturing co-operative societies","204"],["115BB","Tax on winnings from lotteries, crossword puzzles, races","194(Table:S.No.1)"],["115BBA","Tax on non-resident sportsmen or sports associations","211"],["115BBB","Tax on income from units of an open-ended equity oriented fund","Redundant"],["115BBE","Tax on income referred to in section 68 or section 69 or section 69A or section 69B or section 69C or section 69D","195"],["115BBF","Tax on income from patents","194(Table: S.No.2)"],["115BBG","Tax on income from transfer of carbon credit","194(Table: S.No.3)"],["115BBH","Tax on income from virtual digital asset","194(Table: S.No.4)"],["115BBJ","Tax on winnings from online games","194(Table: S.No.5)"],["115C","Special provisions relating to certain incomes of non-residents","212"],["115D","Special provision for computation of total income of non-residents","213"],["115E","Tax on investment income and long-term capital gains","214"],["115F","Capital gains on transfer of foreign exchange assets not to be charged in certain cases","215"],["115G","Return of income not to be filed in certain cases","216"],["115H","Benefit under Chapter to be available in certain cases even after assessee becomes resident","217"],["115I","Chapter not to apply if the assessee so chooses","218"],["115JA","Deemed income relating to certain companies","206"],["115JAA","Tax credit in respect of tax paid on deemed income relating to certain companies","206"],["115JB","Special provisions for payment of tax by certain companies","206"],["115JC","Special provisions for payment of tax by certain persons other than a company","206"],["115JD","Tax credit for alternate minimum tax","206"],["115JG","Conversion of an Indian branch of foreign company into subsidiary Indian company","219"],["115JH","Foreign company said to be resident in India","220"],["115TCA","Tax on income from securitisation trusts","221"],["115TD","Tax on accreted income","352"],["115U","Tax on income in certain cases","222"],["115UA","Tax on income of unit holder and business trust","223"],["115UB","Tax on income of investment fund and its unit holders","224"],["115VA","Computation of profits and gains from the business of operating qualifying ships","225"],["116","Income-tax Authorities","236"],["117","Appointment of income-tax authorities","237"],["118","Control of income-tax authorities","238"],["119","Instructions to subordinate authorities","239"],["119A","Charter for Taxpayer","240"],["120","Jurisdiction of income-tax authorities","241"],["124","Jurisdiction of Assessing Officers","242"],["127","Power to transfer cases","243"],["129","Change of incumbent of an office","244"],["130","Faceless jurisdiction of income-tax authorities","245"],["131","Power regarding discovery, production of evidence, etc.","246"],["132","Search and seizure","247, 249, 251"],["132A","Powers to requisition books of account, etc.","248, 249"],["132B","Application of seized or requisitioned assets","250"],["133","Power to call for information","252"],["133A","Power of survey","253"],["133B","Power to collect certain information","254"],["133C","Power to call for information by prescribed income-tax authority","259"],["134","Power to inspect registers of companies","255"],["135","Power of Principal Director General or Director General","256"],["135A","Faceless collection of information","260"],["136","Proceedings before income-tax authorities to be judicial proceedings","257"],["138","Disclosure of information respecting assessees","258"],["139","Return of Income","263"],["139A","Permanent Account Number","262"],["139AA","Quoting of Aadhaar Number","262(9)"],["139B","Scheme for submission of returns through Tax Return Preparers","264"],["140","Return by whom to be verified","265"],["140A","Self-assessment","266"],["140B","Tax on Updated Returns","267"],["142","Inquiry before assessment","268"],["142A","Estimation of value of assets by Valuation Officer","269"],["143","Assessment","270"],["144","Best judgment assessment","271"],["144A","Power of Joint Commissioner to issue directions in certain cases","272"],["144B","Faceless Assessment","273"],["144C","Reference to dispute resolution panel","275"],["145","Method of accounting","276"],["145A","Method of accounting in certain cases","277"],["145B","Taxability of certain income","278"],["147","Income escaping assessment","279"],["148","Issue of notice where income has escaped assessment","280"],["148A","Procedure before issuance of notice under section 148","281"],["149","Time limit for notice","282"],["150","Provision for cases where assessment is in pursuance of an order on appeal, etc.","283"],["151","Sanction for issue of notice","284"],["152","Other provisions","285"],["153","Time limit for completion of assessments","286"],["153A","Assessment in case of search or requisition","Omitted"],["153B","Time-limit for completion of assessment under section 153A","Omitted"],["153C","Assessment of income of any other person","Omitted"],["154","Rectification of mistake","287"],["155","Other Amendments","288"],["156","Notice of demand","289"],["156A","Modification and revision of notice in certain cases","290"],["157","Intimation of Loss","291"],["159","Legal representatives","302"],["160","Representative assessee","303"],["161","Liability of representative assessee","304"],["162","Right of representative assessee to recover tax paid","305"],["163","Who may be regarded as agent","306"],["164","Charge of tax where share of beneficiaries unknown","307"],["164A","Charge of tax in case of oral trust","308"],["167A","Charge of tax in case of a firm","324"],["167B","Charge of tax where shares of members in association of persons or body of individuals unknown etc.","311"],["167C","Liability of partners of limited liability partnership in liquidation","331"],["168","Executors","312"],["170","Succession to business otherwise than on death","313"],["170A","Effect of order of tribunal or court in respect of business reorganisation","314"],["171","Assessment after partition of a Hindu undivided family","315"],["172","Shipping business of non-residents","316"],["173","Recovery of tax arrear in respect of non-resident from his assets","422"],["174","Assessment of persons leaving India","317"],["174A","Assessment of association of persons or body of individuals or artificial juridical person formed for a particular event or purpose","318"],["175","Assessment of persons likely to transfer property to avoid tax","319"],["176","Discontinued business","320"],["177","Association dissolved or business discontinued","321"],["178","Company in liquidation","322"],["179","Liability of directors of private company","323"],["184","Assessment as a Firm","325"],["185","Assessment when section 184 not complied with","326"],["187","Change in constitution of a firm","327"],["188","Succession of one firm by another firm","328"],["188A","Joint and several liability of partners for tax payable by firm","329"],["189","Firm dissolved or business discontinued","330"],["190","Deduction at source and advance payment","390"],["191","Direct payment","391"],["192","Salary","392"],["192A","Payment of accumulated balance due to an employee","392(7)"],["193","Interest on Securities","393(1)[Table: S.No.5(i)]"],["194","Dividends","393(1)[Table: S.No.7]"],["194A","Interest other than Interest on securities","393(1)[Table: S.No.5(ii) & 5(iii)]"],["194B","Winnings from lottery or crossword puzzle, etc.","393(3)[Table: S.No.1]"],["194BA","Winnings from online games","393(3)[Table: S.No.2]"],["194BB","Winnings from horse race","393(3)[Table: S.No.3]"],["194C","Payments to contractors","393(1)[Table: S.No.6(i)]"],["194D","Insurance commission","393(1)[Table: S.No.1(i)]"],["194DA","Payment in respect of life insurance policy","393(1)[Table: S.No.8(i)]"],["194E","Payments to non-resident sportsmen or sports associations","393(2)[Table: S.No.1]"],["194EE","Payments in respect of deposits under National Savings Schemes","393(3)[Table: S.No.6]"],["194G","Commission on sale of lottery tickets","393(3)[Table: S.No.4]"],["194H","Commission or brokerage","393(1)[Table: S.No.1(ii)]"],["194I","Rent","393(1)[Table: S.No.2(i) & 2(ii)]"],["194-IA","Payment on transfer of certain immovable property other than agricultural land","393(1)[Table: S.No.3(i)]"],["194-IB","Payment of rent by certain individuals or Hindu undivided family","393(3)[Table: S.No.2(ii)]"],["194-IC","Payment under specified agreement","393(1)[Table: S.No.3(ii)]"],["194J","Fees for professional or technical services","393(1)[Table: S.No.6(iii)]"],["194K","Income in respect of units","393(1)[Table: S.No.4(i)]"],["194LA","Payment of compensation on acquisition of certain immovable property","393(1)[Table: S.No.3(iii)]"],["194LB","Income by way of interest from infrastructure debt fund","393(2)[Table: S.No.5]"],["194LBA","Certain income from units of a business trust","393(1)[Table: S.No.4(ii)]"],["194LBB","Income in respect of units of investment fund","393(1)[Table: S.No.4(iii)]"],["194LBC","Income in respect of investment in securitisation trust","393(1)[Table: S.No.4(iv)]"],["194LC","Income by way of interest from Indian company","393(2)[Table: S.No.2,3 & 4]"],["194M","Payment of certain sums by certain individuals or Hindu undivided family","393(1)[Table: S.No.6(ii)]"],["194N","Payment of certain amounts in cash","393(3)[Table: S.No.5]"],["194O","Payment of certain sums by e-commerce operator to e-commerce participant","393(1)[Table: S.No.8(v)]"],["194P","Deduction of tax in case of specified senior citizen","393(1)[Table: S.No.8(vii)]"],["194Q","Deduction of tax at source on payment of certain sum for purchase of goods","393(1)[Table: S.No.8(ii)]"],["194R","Deduction of tax on benefit of perquisite in respect of business or profession","393(1)[Table: S.No.8(iv)]"],["194S","Payment on transfer of virtual digital asset","393(1)[Table: S.No.8(iv)]"],["194T","Payment to partners of firms","393(3)[Table: S.No.7]"],["195","Other sums","393(2)[Table: S.No.17]"],["195A","Income payable net of tax","393(10)"],["196","Interest or dividend or other sums payable to Government, Reserve Bank or certain corporations","393(5)"],["196A","Income in respect of units of non-residents","393(2)[Table: S.No.10]"],["196B","Income from units","393(2)[Table: S.No.11 & 12]"],["196C","Income from foreign currency bonds or shares of Indian company","393(2)[Table: S.No.13 & 14]"],["196D","Income of Foreign Institutional Investors from securities","393(2)[Table: S.No.15 & 16]"],["197","Certificate for deduction at lower rate","395(1)"],["197A","No deduction to be made in certain cases","393(6)"],["198","Tax deducted is income received","396"],["199","Credit for tax deducted","390(5), 390(6)"],["200","Duty of person deducting tax","397(3)"],["200A","Processing of statements of tax deducted at source","399"],["201","Consequences of failure to deduct or pay","398"],["202","Deduction only one mode of recovery","390(4)"],["203","Certificate for tax deducted","395(4)"],["203A","Tax deduction and collection account number","397(1)"],["204","Meaning of Person responsible for paying","402(27)"],["205","Bar against direct demand on assessee","401"],["206C","Profits and gains from the business of trading in alcoholic liquor, forest product, scrap, etc.","394, 395(3 & 4), 397(3), 398"],["206CA","Tax collection account number","397(1)"],["206CB","Processing of statements of tax collected at source","399"],["206CC","Requirement to furnish Permanent Account Number by collectee","397(2)"],["207","Liability for payment of advance tax","403"],["208","Conditions of liability to pay advance tax","404"],["209","Computation of advance tax","405"],["210","Payment of advance tax by the assessee of his own accord or in pursuance of order of Assessing Officer","406 & 407"],["211","Instalments of advance tax and due dates","408"],["218","When assessee deemed to be in default","409"],["219","Credit for advance tax","410"],["220","When tax payable and when assessee deemed in default","411"],["221","Penalty payable when tax in default","412"],["222","Certificate to Tax Recovery Officer","413"],["223","Tax Recovery Officer by whom recovery is to be effected","414"],["224","Validity of certificate and cancellation or amendment thereof","413"],["225","Stay of proceedings in pursuance of certificate and amendment or cancellation thereof","415"],["226","Other modes of recovery","416"],["227","Recovery through State Government","417"],["228A","Recovery of tax in pursuance of agreements with foreign countries","418"],["229","Recovery of penalties, fine, interest and other sums","419"],["230","Tax clearance certificate","420"],["232","Recovery by suit or under other law not affected","421"],["234A","Interest for defaults in furnishing return of income","423"],["234B","Interest for defaults in payment of advance tax","424"],["234C","Interest for deferment of advance tax","425"],["234D","Interest on excess refund","426"],["234E","Fee for default in furnishing statements","427"],["234F","Fee for default in furnishing return of income","428"],["234G","Fee for default relating to statement or certificate","429"],["234H","Fee for default relating to intimation of aadhaar number","430"],["237","Refunds","431"],["238","Person entitled to claim refund in certain special cases","432"],["239","Form of claim for refund and limitation","433"],["239A","Refund for denying liability to deduct tax in certain cases","434"],["240","Refund on appeal etc.","435"],["242","Correctness of assessment not to be questioned","436"],["244A","Interest on refunds","437"],["245","Set off and withholding of refunds in certain cases","438"],["245MA","Dispute Resolution Committee","379"],["245N","Definitions","380"],["245-OB","Board for Advance Rulings","381"],["245P","Vacancies etc., not to invalidate proceedings","382"],["245Q","Application for advance ruling","383"],["245R","Procedure on receipt of application","384"],["245T","Advance ruling to be void in certain circumstances","386"],["245U","Powers of the Authority","387"],["245V","Procedure of Authority","388"],["245W","Appeal","389"],["246","Appealable orders before Joint Commissioner (Appeals)","356"],["246A","Appealable orders before Commissioner (Appeals)","357"],["249","Form of appeal and limitation","358"],["250","Procedure in appeal","359"],["251","Powers of Joint Commissioner (Appeals) or Commissioner (Appeals)","360"],["252","Appellate Tribunal","361"],["253","Appeals to the Appellate Tribunal","362"],["254","Orders of Appellate Tribunal","363"],["255","Procedure of Appellate Tribunal","364"],["260A","Appeal to High Court","365"],["260B","Case before High Court to be heard by not less than two judges","366"],["261","Appeal to Supreme Court","367"],["262","Hearing before Supreme Court","368"],["263","Revision of orders prejudicial to revenue","377"],["264","Revision of other orders","378"],["265","Tax to be paid notwithstanding reference, etc.","369"],["266","Execution for costs awarded by Supreme Court","370"],["267","Amendment of assessment on appeal","371"],["268","Exclusion of time taken for copy","372"],["268A","Filing of appeal or application for reference by income-tax authority","373"],["269","Definition of High Court","374"],["269SS","Mode of taking or accepting certain loans, deposits and specified sum","185"],["269ST","Mode of undertaking transactions","186"],["269SU","Acceptance of payment through prescribed electronic modes","187"],["269T","Mode of repayment of certain loans or deposits","188, 189"],["270A","Penalty for under-reporting and misreporting of income","439"],["270AA","Immunity from imposition of penalty, etc.","440"],["271A","Failure to keep, maintain or retain books of account, documents, etc.","441"],["271AA","Penalty for failure to keep and maintain information and document, etc., in respect of certain transactions","442"],["271AAC","Penalty in respect of certain income","443"],["271AAD","Penalty for false entry, etc., in books of account","444"],["271AAE","Benefits to related persons","445"],["271B","Failure to get accounts audited","446"],["271BA","Penalty for failure to furnish report under section 92E","447"],["271C","Penalty for failure to deduct tax at source","448"],["271CA","Penalty for failure to collect tax at source","449"],["271D","Penalty for failure to comply with the provisions of section 269SS","450"],["271DA","Penalty for failure to comply with provisions of section 269ST","451"],["271DB","Penalty for failure to comply with provisions of section 269SU","452"],["271E","Penalty for failure to comply with provisions of section 269T","453"],["271FA","Penalty for failure to furnish statement of financial transaction or reportable account","454"],["271FAA","Penalty for furnishing inaccurate statement of financial transaction or reportable account","455"],["271FAB","Penalty for failure to furnish statement or information or document by an eligible investment fund","456"],["271G","Penalty for failure to furnish information or document under section 92D","457"],["271GA","Penalty for failure to furnish information or document under section 285A","458"],["271GB","Penalty for failure to furnish report or for furnishing inaccurate report under section 286","459"],["271GC","Penalty for failure to submit statement under section 285","460"],["271H","Penalty for failure to furnish statements, etc.","461"],["271-I","Penalty for failure to furnish information or furnishing inaccurate information under section 195","462"],["271J","Penalty for furnishing incorrect information in reports or certificates","463"],["271K","Penalty for failure to furnish statements, etc.","464"],["272A","Penalty for failure to answer questions, sign statements, furnish information, returns or statements, allow inspections, etc.","465"],["272AA","Penalty for failure to comply with the provisions of section 133B","466"],["272B","Penalty for failure to comply with the provisions of section 139A","467"],["272BB","Penalty for failure to comply with the provisions of section 203A","468"],["273A","Power to reduce or waive penalty, etc., in certain cases","469"],["273B","Penalty not to be imposed in certain cases","470"],["274","Procedure","471"],["275","Bar of limitation for imposing penalties","472"],["275A","Contravention of order made under sub-section (3) of section 132","473"],["275B","Failure to comply with the provisions of clause (iib) of sub-section (1) of section 132","474"],["276","Removal, concealment, transfer or delivery of property to prevent tax recovery","475"],["276B","Failure to pay tax to credit of Central Government under Chapter XII-D or XVII-B","476"],["276BB","Failure to pay tax collected at source","477"],["276C","Wilful attempt to evade tax, etc.","478"],["276CC","Failure to furnish returns of income","479"],["276CCC","Failure to furnish return of income in search cases","480"],["276D","Failure to produce accounts and documents","481"],["277","False statement in verification, etc.","482"],["277A","Falsification of books of account or document, etc.","483"],["278","Abetment of false return, etc.","484"],["278A","Punishment for second and subsequent offences","485"],["278AA","Punishment not to be imposed in certain cases","486"],["278B","Offences by companies","487"],["278C","Offences by Hindu undivided family","488"],["278D","Presumption as to assets, books of account, etc., in certain cases","489"],["278E","Presumption as to culpable mental state","490"],["279","Prosecution to be at instance of Principal Chief Commissioner or Chief Commissioner","491"],["279A","Certain offences to be non-cognizable","492"],["279B","Proof of entries in records or documents","493"],["280","Proof of entries in records or documents, and Disclosure of particulars by public servants","494"],["280A","Special Courts","495"],["280B","Offences triable by Special Court","496"],["280C","Trial of offences as summons case","497"],["280D","Application of Code of Criminal Procedure, 1973 to proceedings before Special Court","498"],["281","Certain transfers to be void","499"],["281B","Provisional attachment to protect revenue in certain cases","500"],["282","Service of notice, generally","501"],["282A","Authentication of notices and other documents","502"],["283","Service of notice when family is disrupted or firm is dissolved","503"],["284","Service of notice in case of discontinued business","504"],["285","Submission of statement by a non-resident having liaison office","505"],["285A","Furnishing of information or documents by an Indian concern in certain cases","506"],["285B","Submission of statements by producers of cinematograph films or persons engaged in specified activity","507"],["285BA","Obligation to furnish statement of financial transaction or reportable account","508"],["285BAA","Obligation to furnish information on transaction of crypto-asset","509"],["285BB","Annual information statement","510"],["286","Furnishing of report in respect of international group","511"],["287","Publication of information respecting assessees in certain cases","512"],["287A","Appearance by registered valuer in certain matters","513"],["288","Appearance by authorised representative","515"],["288A","Rounding off of income","516"],["288B","Rounding off of amount payable and refundable due","516"],["289","Receipt to be given","517"],["290","Indemnity","518"],["291","Power to tender immunity from prosecution","519"],["292","Cognizance of offences","520"],["292B","Return of income, etc., not to be invalid on certain grounds","522"],["292BB","Notice deemed to be valid in certain circumstances","523"],["292C","Presumption as to assets, books of account, etc.","524"],["292CC","Authorisation and assessment in case of search or requisition","525"],["293","Bar of suits in civil courts","526"],["293A","Power to make exemption in relation to participation in business of prospecting for, extraction of mineral oils","527"],["293B","Power of Central Government or Board to condone delays in obtaining approval","528"],["293C","Power to withdraw approval","529"],["294","Act to have effect pending legislative provision for charge of tax","530"],["294A","Power to make exemption in relation to certain Union territories","531"],["295","Power to make rules","533"],["296","Rules and certain notifications to be placed before Parliament","534"],["297","Repeal and Savings","536"],["298","Power to remove difficulties","535"]
+];
+
+// ═══════════════════════════════════════════════════════
+// RULES MAPPING  (Rule 1962 → Rule 2026)
+// Source: CBDT navigator-Income-tax-Rules-2026.pdf
+// Note: Navigator lists NEW rule → OLD rule, we invert for old→new lookup
+// ═══════════════════════════════════════════════════════
+const RULES = [
+  ["1","Short title and commencement","1"],["2","Definitions","2"],["27","Prescribed arrangements for declaration and payment of dividends within India","3"],["6DDA","Conditions that a stock exchange is required to fulfil to be notified as a recognised stock exchange","4"],["6DDB","Procedure for notification of a recognised stock exchange","5"],["8AA","Method of determination of period of holding of capital assets in certain cases","6"],["8B","Guidelines for notification of zero-coupon bond","7"],["126","Computation of period of stay in India for an Indian Citizen being a member of the crew of a foreign bound ship","8"],["10","Determination of income in case of non-residents","9"],["11UB","Definition of terms for rule 11 and rule 12","10"],["11UC","Fair market value of assets in certain cases","11"],["11UD","Determination of income attributable to assets in India","12"],["11UE","Threshold for the purposes of significant economic presence","13"],["8D","Method for determining amount of expenditure in relation to income not includible in total income","14"],["3","Valuation of perquisites","15"],["3C","Salary income for purposes of section 17(1)(c)(ii) of the Act","16"],["3B","Annual accretion referred to in section 17(1)(i) of the Act","17"],["3A","Exemption of medical benefits from perquisite value in respect of medical treatment of prescribed diseases","18"],["3D","Gross total income for the purposes of section 17(3)(b) of the Act","19"],["2BA","Guidelines for the purposes of section 19 (Table: Sl.No.12) of the Act relating to voluntary retirement or voluntary separation","20"],["4","Unrealised rent","21"],["6ABA","Computation of aggregate average advances for the purposes of Section 31(1) of the Act","22"],["8C","Computation of pro rata amount of discount on a zero coupon bond","23"],["6ABAA","Infrastructure facility under section 32(e) of the Act","24"],["5","Depreciation","25"],["6DD","Cases and circumstances in which a payment exceeding ten thousand rupees may be made otherwise than by specified banking mode","26"],["6ABBB","Form of statement to be furnished regarding certain preliminary expenses eligible for deduction under section 44","27"],["6AB","Form of audit report for claiming deductions under sections 44 and 51","28"],["6","Prescribed authority and process of approval for expenditure on scientific research","29"],["5C","Guidelines, form and manner in respect of approval under section 45(4)","32"],["5D","Conditions subject to which approval is to be granted to a research association under section 45(4)","33"],["5E","Conditions subject to which approval is to be granted to a university, college or other institution under section 45(4)","34"],["5F","Prescribed authority, guidelines, form, manner and conditions for approval under section 45(3)(b)","35"],["11-OA/OB","Guidelines for notification of an affordable housing project or a semiconductor wafer fabrication manufacturing unit","36"],["6AAD","Guidelines for approval of Agricultural Extension Project under section 47(1)(a)","37"],["6AAE","Conditions for Notification of Agricultural Extension Projects under section 47(1)(a)","38"],["6AAF","Guidelines for Approval of Skill Development Projects under Section 47(1)(b)","39"],["6AAG and 6AAH","Conditions subject to which a skill development project is to be notified under Section 47(1)(b)","40"],["6A","Expenditure for obtaining right to use spectrum for telecommunication services","41"],["6EA","Special provision regarding interest on bad and doubtful debt of specified financial institution","42"],["6GA","Form of report of audit to be furnished under section 59(4)","43"],["6GB","Conditions to be fulfilled by a non-resident engaged in the business of operation of cruise ships","44"],["6F","Maintenance of books of accounts under section 62","46"],["6G","Report of audit of accounts to be furnished under section 63","47"],["6ABBA","Other electronic modes of payment","48"],["8AD","Computation of capital gains for the purposes of section 67(5)","49"],["8AB","Attribution of income taxable under section 67(10) to the capital assets remaining with the specified entity","50"],["21AL","Other conditions required to be fulfilled by the original fund","51"],["115A","Rate of exchange for conversion of rupees into foreign currency for the purpose of computation of capital gains","52"],["11UAE","Computation of fair market value of capital assets for the purposes of section 77","53"],["6H","Form of report of an accountant in respect of slump sale","54"],["111AA","Conditions for reference to Valuation Officers under Section 91(1)(b)","55"],["11U","Meaning of expressions used in determination of fair market value","56"],["11UA/UAA/UAB","Determination of Fair Market Value","57"],["11UACA","Computation of income chargeable to tax under section 92(2)(l)","59"],["9C","Conditions for carrying forward or set-off of accumulated loss and unabsorbed depreciation allowance in case of amalgamation","60"],["11A","Certificate of a Medical Authority in respect of autism, cerebral palsy and multiple disabilities","61"],["11DD","Issuance of prescription in respect of certain diseases and ailments for the purpose of deduction under section 128","62"],["18AAA","Prescribed authority for approval of a University or any educational institution of national eminence for the purpose of section 133","63"],["18AAAAA","Guidelines for specifying an association or institution for the purposes of notification under section 133(1)(a)(xxiv)","64"],["11B","Conditions for claim for deduction under section 134","65"],["16DD","Form of particulars to be furnished along with return of income for claiming deduction under section 144","67"],["19AB","Furnishing of report under section 146","68"],["19AE","Report of accountant to be furnished under section 147(4)(a)","69"],["19AC","Form of certificate to be furnished under section 151(5)","70"],["19AD","Prescribed authority and form of certificate to be furnished under section 152(5)","71"],["29A","The prescribed authority and form of certificate to be furnished under section 151(6) and section 152(6)","72"],["21A, 21AA","Relief under section 157(1) when salary is paid in arrears or in advance, gratuity, etc.","73"],["21AAA","Taxation of income from retirement benefit account in notified country","74"],["21AB","Other documents and information to be provided for claiming double taxation relief under section 159(1) and 159(2)","75"],["128","Foreign Tax Credit","76"],["10A","Meaning of expressions used in determination of arm's length price","77"],["10AB","Other method for determination of arm's length price","78"],["10B","Determination of arm's length price under section 165","79"],["10C","Most appropriate method","80"],["10CA","Determination of arm's length price in certain cases","81"],["10CB","Time period for repatriation of excess money under section 170(2) and computation of interest income under section 170(4)","83"],["10D","Information and documents to be kept and maintained under section 171(1)(a)","84"],["10E","Report from an accountant to be furnished under section 172","85"],["10TA","Definitions for safe harbour rules for international transactions","86"],["10TB","Eligible assessee for safe harbour rules for international transactions","87"],["10TC","Eligible international transactions for safe harbour","88"],["10TD","Safe harbour for eligible international transactions","89"],["10TE","Procedure relating to transactions other than provision of information technology services","90"],["10TF","Safe harbour rules for international transactions not to apply in certain cases","92"],["10TG","Mutual Agreement Procedure not to apply where Safe harbour for international transactions is accepted","93"],["10TH","Definitions for safe harbour rules for specified domestic transaction","94"],["10THA","Eligible assessee for safe harbour rules for specified domestic transactions","95"],["10THB","Eligible specified domestic transaction for safe harbour","96"],["10THC","Safe harbour for eligible specified domestic transaction","97"],["10THD","Procedure governing safe harbour rules for specified domestic transactions","98"],["10TI","Definitions for safe harbour rules for income attribution in case of income from business and profession","99"],["10TIA","Safe Harbour for income attribution in case of income from business and profession","100"],["10TIB","Procedure governing safe harbour rules for income attribution in case of income from business and profession","101"],["10TIC","Mutual Agreement Procedure not to apply where safe harbour for income attribution in case of income from business and profession is exercised","102"],["10F","Meaning of expressions used in matters in respect of advance pricing agreement","103"],["10G","Persons eligible to apply for advance pricing agreement","104"],["10H","Pre-filing consultation for advance pricing agreement","105"],["10-I","Application for advance pricing agreement","106"],["10J","Withdrawal of application for agreement","107"],["10K","Preliminary processing of application","108"],["10L","Procedure for advance pricing agreement","109"],["10M","Terms of the agreement","110"],["10MA","Roll Back of the Agreement","111"],["10N","Amendments to Application","112"],["10-O","Furnishing of Annual Compliance Report","113"],["10P","Compliance Audit of the agreement","114"],["10Q","Revision of an agreement","115"],["10R","Cancellation of an agreement","116"],["10RA","Procedure for giving effect to rollback provision of an Agreement","117"],["10RB","Relief in tax payable under section 206(1) due to operation of section 206(1)(i)","118"],["10S","Renewing an agreement","119"],["10T","Miscellaneous provisions for advance pricing agreement","120"],["44G","Application seeking to give effect to the terms of any agreement under section 533(2)(p)","121"],["44GA","Procedure to deal with requests for bilateral or multilateral advance pricing agreements","122"],["10DA","Maintenance and furnishing of information and document by constituent entity of an international group under section 171","123"],["10DB","Furnishing of report in respect of an international group under section 511","124"],["21AC","Furnishing of authorization and maintenance of documents, etc. for the purposes of section 176","125"],["21ACA","Conditions and activities for the Finance Company located in any International Financial Services Centre for section 177","126"],["10UA","Determination of consequences of impermissible avoidance arrangement","127"],["10U","Chapter XI relating to General Anti Avoidance Rule not to apply in certain cases","128"],["10UB","Notice, Forms for reference under section 274","129"],["10UC","Time limits for General Anti Avoidance Rule","130"],["10UE","Procedure before the Approving Panel","131"],["10UF","Remuneration for Approving Panel","132"],["119AA","Modes of payment for the purpose of section 187","133"],["5G","Exercise of option for taxation of royalty income from patent under section 194(1)(Table: Sr. No. 2)","134"],["133","Calculation of net winnings from online games for purpose of section 194(1)(Table: Sl. No. 5)","135"],["21AD","Exercise or withdrawal of option for new tax regime","136"],["40B","Special provision for payment of tax by certain companies","137"],["40BA","Special provisions for payment of tax by certain persons other than a company","138"],["21AI","Computation of exempt income of specified fund attributable to units held by non-resident under Schedule VI","139"],["21AJ","Determination of income of a specified fund attributable to units held by non-residents under section 210(2)","140"],["12C, 12CA, 12CB & 12CC","Statements under section 221(4), 222(2), section 223(5) and section 224(9)","145"],["11P/Q/R/S/T","Rules related to application for exercising the option for tonnage tax scheme","146"],["111B","Publication and circulation of Board's order under section 239(3)(a)","147"],["112","Search and Seizure under section 247","148"],["13","Procedure to requisition services under section 247(5) and to make a reference under section 247(9)","149"],["13, 13A","Valuation under section 247(9)","150"],["112D","Requisition of books of account, etc. under section 248","151"],["112C","Release of remaining assets under section 250","152"],["112E","Form of information under section 254(1)","154"],["113","Disclosure of information related to assesses under section 258(2)","155"],["12D","Prescribed income-tax authority under section 259","156"],["114AAB","Persons Exempt from Obtaining permanent account number under Section 262","157"],["114","Application for allotment of a permanent account number","158"],["114B","Transactions in relation to which permanent account number is to be quoted","159"],["114D","Time and manner in which persons shall furnish a statement containing particulars","160"],["114BB","Transactions for the purposes of section 262(9)(a)","161"],["114AAA","When PAN becomes inoperative under section 262(6)","162"],["12AB","Conditions for furnishing return of income by persons other than a company or firm referred to in section 263(1)(a)(x)","163"],["12","Forms, eligibility, verification etc. in respect of return of income","164"],["12AC","Furnishing of updated return of income under section 263(6) read with section 263(2)","165"],["45","Form of appeal to Joint Commissioner (Appeals) or Commissioner (Appeals) under section 358","167"],["12AA","Prescribed person for verification of return for the purposes of section 265","168"],["14","Form of verification for furnishing information under section 268(1)(c)","169"],["12F","Prescribed income-tax authority under section 268(3) for issue of notice under section 268(1)","170"],["14A","Forms for report of audit or inventory valuation under section 268(5)","171"],["14B","Guidelines for the purposes of determining expenses for audit or inventory valuation","172"],["12E","Prescribed income-tax authority under section 270(8)","175"],["12AD","Modified return of income in respect of business reorganisation under section 314","177"],["134","Application under section 288(1)(Table: Sl. No. 11) regarding credit of tax deduction at source","178"],["15","Notice of demand under section 289","179"],["12AE","Return of income in respect of block assessment under section 294(1)","180"],["17A","Common Application for registration of non-profit organisation or for approval for the purposes of deduction under section 133(1)(b)(ii)","181"],["17","Exercise of options by a registered non-profit organisation under section 341(7) for deemed application","184"],["17AA","Books of account and other documents to be kept and maintained by a registered non-profit organisation","187"],["17B","Report of audit in the case of registered non-profit organisations under section 348","188"],["17CB","Method of valuation for the purposes of computing fair market value of assets and liabilities under section 352(2) for accreted income","189"],["18AB","Furnishing of statement of particulars in respect of donation and certificate to the donor under section 354(1)","190"],["46","Mode of service of any order as is referred in section 358(3)(b)","191"],["46A","Production of additional evidence before the Joint Commissioner (Appeals) and Commissioner (Appeals)","192"],["47","Form of appeal and memorandum of cross-objections to Appellate Tribunal under section 362","193"],["15A","Declaration under section 375","194"],["16","Application under section 376 to defer filing of appeal before the Appellate Tribunal or the jurisdictional High Court","195"],["44DAA","Constitution of Dispute Resolution Committee under section 379","196"],["44DAB","Application for resolution of dispute before the Dispute Resolution Committee under section 379","197"],["44DAC","Power to reduce or waive penalty imposable or grant immunity from prosecution or both under section 379","198"],["44DAD","Definitions for Dispute Resolution","199"],["44E","Application for obtaining an advance ruling under section 383","200"],["44F","Certification of copies of the advance rulings pronounced by the Board for Advance Rulings","201"],["44FA","Form and manner of filing appeal to the High Court on ruling pronounced or order passed by the Board for Advance Rulings","202"],["37BA/37-I","Credit for tax deducted or collected at source","203"],["26A/26B","Furnishing of particulars for deduction of tax at source from income under the head Salaries","204"],["26C","Furnishing of evidence of claims by employee for deduction of tax from income under the head Salaries","205"],["115","Rate of exchange for conversion into rupees of income expressed in foreign currency","206"],["26","Rate of exchange for the purpose of deduction of tax at source of income payable in foreign currency","207"],["26D","Furnishing of declaration and evidence of claims by specified senior citizen under section 393(1)","208"],["29B","Application by the payee for certificate authorising receipt of interest and other sums without deduction of tax","209"],["29C","Declaration by person claiming receipt of certain incomes without deduction of tax under section 393(6)","211"],["37C","Declaration by a buyer for no collection of tax at source under Section 394(2)","212"],["28/28AA/28AB/29/37G/37H","Application for grant of certificates for deduction or collection of income-tax at any lower rates or no deduction","213"],["29BA","Application by the payer for grant of certificate under section 395(2) or 400(3)","214"],["31/37D","Certificate of tax deducted or collected at source to be furnished under section 395(4)","215"],["114A","Application for allotment of a tax deduction and collection account number","216"],["37BC","Conditions under section 397(2)(c) for non-application of deduction of tax at higher rate in case of non-residents","217"],["30/37CA","Time and mode of payment to Government account of tax deducted or collected at source","218"],["31A/31AA","Statement of deduction or collection of tax at source under Section 397(3)(b)","219"],["37BB","Furnishing of information for payment to a non-resident, not being a company, or to a foreign company","220"],["31ACB/37J","Form for furnishing certificate of accountant under Section 398(2)","221"],["38","Notice of Demand under section 289","222"],["39","Estimate of advance tax under section 407(8)","223"],["117B","Form of statement under section 413 or section 414","224"],["117C","Tax recovery officer to exercise or perform certain powers and functions of an Assessing Officer under section 413","226"],["42","Prescribed authority for tax clearance certificates under section 420","227"],["43","Forms and certificates for the purpose of section 420","228"],["44","Production of certificate under section 420","229"],["40G","Refund claim under section 434","230"],["129","Form of application under section 440","231"],["127","Service of notice, summons, requisition, order and other communication under section 501","232"],["127A","Authentication of notices and other documents","233"],["114DA","Furnishing of Annual Statement by a non-resident having Liaison Office in India","234"],["114DB","Information or documents to be furnished under section 506","235"],["121A","Form of statement to be furnished by producers of cinematograph films or persons engaged in specified activity","236"],["114E","Furnishing of statement of financial transaction","237"],["114F","Definitions for financial transactions reporting","238"],["114G","Information to be maintained and reported","239"],["114H","Due diligence requirement","240"],["114-I","Annual information statement","245"],["49","Form of report of valuation by registered valuer under section 514(3)","250"],["50","Accountancy Examination Recognised","251"],["51","Education qualifications prescribed","252"],["51A","Nature of business relationship","253"],["51B","Appearance by Authorised Representative in certain cases","254"],["53","Register of income-tax practitioners","255"],["54","Application for registration","256"],["55","Certificate of registration","257"],["56","Cancellation of Certificate","258"],["57","Cancellation of certificate obtained by misrepresentation","259"],["58","Removal of name of authorised income-tax practitioner who is insolvent or on whom penalty has been imposed","260"],["59","Prescribed authority to order an inquiry","261"],["60","Charge-sheet","262"],["61","Inquiry Officer","263"],["62","Proceedings before Inquiry Officer","264"],["63","Order of the prescribed authority","265"],["64","Procedure if no Inquiry Officer appointed","266"],["65","Change of Inquiry Officer","267"],["66","Powers of prescribed authority and Inquiry Officer","268"],["119A","Procedure to be followed in calculating interest under section 533(2)(u)","269"],["7","Determination of income, being partly from agricultural and partly from business","270"],["7A, 7B & 8","Income from manufacture of rubber, coffee and tea","271"],["9A","Deduction in respect of expenditure on production of feature films","272"],["9B","Deduction in respect of expenditure on acquisition of distribution rights of feature films","273"],["10V","Guidelines for investment fund for availing benefit under section 9(12) read with Schedule I","274"],["10VA","Approval of the investment fund for the purposes of section 9(12)","275"],["10VB","Statement to be furnished by the eligible investment fund under section 9(12) read with Schedule I","276"],["9D","Calculation of taxable interest relating to contribution in a provident fund or recognised provident fund, exceeding specified limit","277"],["2B","Conditions for the purpose of Schedule III (Table: Sl. No. 8)","278"],["2A","Limits for the purposes of Schedule III (Table: Sl.No 11)","279"],["2BB","Prescribed allowances for the purposes of Schedule III (Table: Sl No. 12 & 13)","280"],["2BBA","Circumstances and conditions for the purposes of Schedule III (Table: Sl.No 16)","281"],["2DB","Notification of pension fund and other conditions to be satisfied by the pension fund","282"],["2DCA","Computation of minimum investment and exempt income for the purposes of Schedule V [Table: Sl. No. 7]","283"],["21AK","Conditions for the purpose of Schedule VI [Table: Sl. No. 5]","284"],["2DD","Computation of exempt income in the nature of capital gains in connection with relocation of original fund","285"],["16C","Requirements for approval of a fund for welfare of employees and their dependents under Schedule VII","286"],["2BBB","Percentage of Government Grant for considering any university, hospital, or any other institution, as substantially financed by the Government","287"],["2F","Guidelines for setting up an Infrastructure Debt Fund for the purpose of exemption under Schedule VII","288"],["17CA","Rules for functioning of an electoral trust","289"],["5AC","Report of audit of accounts to be furnished under Schedule IX r.w. section 48","290"],["5AD","Report of audit of accounts to be furnished under Schedule X r.w. section 49","291"],["67","Investment of fund moneys","292"],["67A","Nomination under provident fund rules","293"],["74","Accounts under fund rules","294"],["76","Penalty for assigning or creating a charge on beneficial interest","295"],["77","Application for recognition","296"],["78","Order of recognition","297"],["79","Withdrawal of recognition","298"],["80","Exemption from tax when recognition withdrawn","299"],["81","Appeal under fund rules","300"],["82","Definitions under fund rules","301"],["83 and 84","Conditions regarding trust and trustees","302"],["85","Investment of fund moneys","303"],["86","Admission of directors to a fund","304"],["87","Ordinary annual contributions","305"],["88","Initial contributions","306"],["89","Scheme of insurance or annuity","307"],["90","Commutation of annuity","308"],["91","Beneficiary not to have any interest in insurance and employer not to have any interest in fund's moneys","309"],["92","Penalty if employee assigns or charges interest in fund","310"],["93","Arrangements on winding up, etc., of business","311"],["94","Arrangements for winding up, etc., of fund","312"],["95","Application of approval under fund rules","313"],["96","Amendment of rules, etc., of fund","314"],["97","Appeal under fund rules","315"],["98","Definitions under fund rules","316"],["99 and 100","Conditions regarding trust and trustees for gratuity fund","317"],["101","Investment of fund moneys for gratuity fund","318"],["101A","Nomination for gratuity fund","319"],["102","Admission of directors to a gratuity fund","320"],["103","Ordinary annual contributions to gratuity fund","321"],["104","Initial contributions to gratuity fund","322"],["105","Penalty if employee assigns or charges interest in gratuity fund","323"],["106","Employer not to have interest in fund moneys for gratuity fund","324"],["107","Arrangements for winding up, etc., of business for gratuity fund","325"],["108","Arrangements for winding up of the gratuity fund","326"],["109","Application for approval of gratuity fund","327"],["110","Amendment of rules, etc., of gratuity fund","328"],["111","Appeal under gratuity fund rules","329"],["6E","Limits of reserve for unexpired risks","330"],["20 and 20A","Guidelines for approval under Schedule XV (1)(z)(i) and (1)(z)(ii)","331"],["131","Electronic furnishing of Forms, Returns, Statements, Reports, orders etc","332"],["125","Electronic payment of tax","333"]
+];
+
+// ═══════════════════════════════════════════════════════
+// BUILD LOOKUP MAPS
+// ═══════════════════════════════════════════════════════
+function buildMap(data) {
+  const exact = {}, prefix = {};
+  data.forEach(([old, desc, neo]) => {
+    const k = old.toLowerCase().replace(/\s+/g,'');
+    exact[k] = { old, desc, neo };
+    const base = old.replace(/[\s\(\)\/\.]/g,'').toLowerCase();
+    if (!prefix[base]) prefix[base] = [];
+    prefix[base].push({ old, desc, neo });
+  });
+  return { exact, prefix };
+}
+const actMap = buildMap(ACT);
+const rulesMap = buildMap(RULES);
+
+function normalize(s) {
+  return s.trim().toLowerCase()
+    .replace(/^(section|rule|sec|r\.?)\s*/i,'')
+    .replace(/\s+/g,'').replace(/–/g,'-');
+}
+
+function lookup(norm, map) {
+  // exact
+  if (map.exact[norm]) return [map.exact[norm]];
+  // variations
+  for (const v of [norm, norm.replace(/-/g,''), norm.replace(/\(|\)/g,'')]) {
+    if (map.exact[v]) return [map.exact[v]];
+  }
+  // prefix / base
+  const base = norm.replace(/[\(\)\/\.]/g,'');
+  if (map.prefix[base]) return map.prefix[base];
+  // partial
+  const partial = Object.keys(map.exact).filter(k =>
+    k.startsWith(norm) || norm.startsWith(k.split('(')[0])
+  );
+  if (partial.length) return partial.map(k => map.exact[k]);
+  return [];
+}
+
+function getStatus(neo) {
+  const s = neo.toLowerCase();
+  if (s === 'redundant') return 'redundant';
+  if (s === 'omitted') return 'omitted';
+  if (s === 'new rule') return 'new';
+  if (s.startsWith('schedule')) return 'schedule';
+  return 'normal';
+}
+
+function renderResult(container, results, raw, type) {
+  const el = document.getElementById(container);
+  const isAct = type === 'act';
+  const accent = isAct ? 'act' : 'rules';
+  const oldLabel = isAct ? 'IT Act, 1961' : 'IT Rules, 1962';
+  const newLabel = isAct ? 'IT Act, 2025' : 'IT Rules, 2026';
+
+  if (!results.length) {
+    el.innerHTML = `<div class="result-card warn-card">
+      <div class="result-head warn-head"><span>Not Found</span></div>
+      <div class="result-body" style="padding:20px 28px;font-style:italic;color:var(--muted)">
+        No mapping found for <strong style="color:var(--ink)">"${raw}"</strong>. Check the number and try again, or browse the full table.
+      </div></div>`;
+    el.classList.add('show'); return;
+  }
+
+  if (results.length === 1) {
+    const r = results[0];
+    const st = getStatus(r.neo);
+    const isSpecial = st !== 'normal';
+    const headClass = isSpecial ? 'warn-head' : `${accent}-head`;
+    const cardClass = isSpecial ? 'warn-card' : `${accent}-card`;
+    const newBlockClass = isAct ? 'new-block-act' : 'new-block-rules';
+    const numClass = isAct ? 'sec-num-act' : 'sec-num-rules';
+    const arrowClass = isAct ? 'arrow-svg-act' : 'arrow-svg-rules';
+
+    el.innerHTML = `<div class="result-card ${cardClass}">
+      <div class="result-head ${headClass}">
+        <span>Mapping Result · ${oldLabel} → ${newLabel}</span>
+        <span style="opacity:.7;font-size:9px">Official CBDT Navigator</span>
+      </div>
+      <div class="result-body">
+        <div class="map-grid">
+          <div class="sec-block old-block">
+            <div class="sec-tag">${oldLabel}</div>
+            <div class="sec-num">${isAct?'§':''} ${r.old}</div>
+            <div class="sec-title">${r.desc}</div>
+          </div>
+          <div class="arrow-col">
+            <svg class="${arrowClass}" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            <div class="arrow-text">maps to</div>
+          </div>
+          <div class="sec-block ${newBlockClass}">
+            <div class="sec-tag">${newLabel}</div>
+            ${isSpecial
+              ? `<div style="margin-top:8px"><span class="status-pill pill-${st}">${r.neo}</span></div>`
+              : `<div class="sec-num ${numClass}">${isAct?'§':''} ${r.neo}</div>`
+            }
+            <div class="sec-title" style="margin-top:${isSpecial?'10px':'5px'}">${r.desc}</div>
+          </div>
+        </div>
+        <div class="result-note">
+          <strong>Note:</strong> ${
+            st==='redundant'? `This ${isAct?'section':'rule'} is marked <strong>Redundant</strong> in the ${newLabel} — it has no operative effect and has been removed.`
+            : st==='omitted'? `This ${isAct?'section':'rule'} has been <strong>Omitted</strong> — it was already removed or is not carried forward into the ${newLabel}.`
+            : st==='new'? `This is a <strong>New Rule</strong> in the ${newLabel} — it has no direct counterpart in the ${oldLabel}.`
+            : st==='schedule'? `This provision has been moved to a <strong>Schedule</strong> in the ${newLabel}: <strong>${r.neo}</strong>.`
+            : `${isAct?'Section':'Rule'} <strong>${r.old}</strong> of the ${oldLabel} corresponds to <strong>${isAct?'Section':'Rule'} ${r.neo}</strong> of the ${newLabel}. The substantive content remains materially similar; only the numbering has changed.`
+          }
+        </div>
+      </div></div>`;
+  } else {
+    const rows = results.map(r => {
+      const st = getStatus(r.neo);
+      const numCls = type==='act' ? 'multi-num-act' : 'multi-num-rules';
+      const tealCls = type==='rules' ? 'teal-item' : '';
+      return `<div class="multi-item ${tealCls}" onclick="document.getElementById('${type==='act'?'actInput':'rulesInput'}').value='${r.old.replace(/'/g,"\\'")}'; search${type==='act'?'Act':'Rules'}();">
+        <div class="multi-num ${numCls}">${type==='act'?'§':''} ${r.old}</div>
+        <div class="multi-info">
+          <div>${r.desc}</div>
+          <div class="multi-sub">→ ${st!=='normal'?`<span class="status-pill pill-${st}" style="font-size:9px">${r.neo}</span>`:
+            `${type==='act'?'Section':'Rule'} ${r.neo} (${newLabel})`}</div>
+        </div></div>`;
+    }).join('');
+    el.innerHTML = `<div class="result-card ${accent}-card">
+      <div class="result-head ${accent}-head">
+        <span>Multiple matches for "${raw}" · Click to select</span>
+        <span style="opacity:.7">${results.length} results</span>
+      </div>
+      <div class="result-body"><div class="multi-list">${rows}</div></div></div>`;
+  }
+  el.classList.add('show');
+  el.scrollIntoView({ behavior:'smooth', block:'nearest' });
+}
+
+function searchAct() {
+  const raw = document.getElementById('actInput').value;
+  if (!raw.trim()) return;
+  const results = lookup(normalize(raw), actMap);
+  renderResult('act-result', results, raw.trim(), 'act');
+}
+function quickAct(s) { document.getElementById('actInput').value = s; searchAct(); }
+document.getElementById('actInput').addEventListener('keydown', e => { if(e.key==='Enter') searchAct(); });
+
+function searchRules() {
+  const raw = document.getElementById('rulesInput').value;
+  if (!raw.trim()) return;
+  const results = lookup(normalize(raw), rulesMap);
+  renderResult('rules-result', results, raw.trim(), 'rules');
+}
+function quickRules(s) { document.getElementById('rulesInput').value = s; searchRules(); }
+document.getElementById('rulesInput').addEventListener('keydown', e => { if(e.key==='Enter') searchRules(); });
+
+// ═══════════════════════════════════════════════════════
+// TABS
+// ═══════════════════════════════════════════════════════
+function switchTab(tab, btn) {
+  ['act','rules','browse'].forEach(t => {
+    document.getElementById('panel-'+t).classList.remove('visible');
+    document.getElementById('tab-'+t).classList.remove('active-act','active-rules','active-browse');
+  });
+  document.getElementById('panel-'+tab).classList.add('visible');
+  document.getElementById('tab-'+tab).classList.add(tab==='rules'?'active-rules':'active-act');
+  if (tab==='browse') renderBrowse();
+}
+
+// ═══════════════════════════════════════════════════════
+// BROWSE TABLE
+// ═══════════════════════════════════════════════════════
+let showAct = true, showRules = true, statusFilter = 'all';
+
+function toggleFilter(type, btn) {
+  if (type==='act') { showAct=!showAct; btn.classList.toggle('on'); }
+  else { showRules=!showRules; btn.classList.toggle('on'); }
+  renderBrowse();
+}
+
+function filterStatus(s) {
+  statusFilter = s;
+  document.querySelectorAll('#browse-filters .filter-btn:not(.fa):not(.fr)').forEach(b=>b.classList.remove('on'));
+  event.target.classList.add('on');
+  renderBrowse();
+}
+
+function renderBrowse() {
+  const q = (document.getElementById('browseSearch').value||'').toLowerCase();
+  const tbody = document.getElementById('browse-body');
+  let rows = [];
+
+  const both = [
+    ...(showAct ? ACT.map(r=>({type:'act', old:r[0], desc:r[1], neo:r[2]})) : []),
+    ...(showRules ? RULES.map(r=>({type:'rules', old:r[0], desc:r[1], neo:r[2]})) : [])
+  ];
+
+  const filtered = both.filter(r => {
+    const st = getStatus(r.neo);
+    const matchStatus =
+      statusFilter==='all' ||
+      (statusFilter==='mapped' && (st==='normal'||st==='schedule')) ||
+      (statusFilter==='redundant' && st==='redundant') ||
+      (statusFilter==='omitted' && st==='omitted') ||
+      (statusFilter==='new' && st==='new');
+    const matchQ = !q ||
+      r.old.toLowerCase().includes(q) ||
+      r.desc.toLowerCase().includes(q) ||
+      r.neo.toLowerCase().includes(q);
+    return matchStatus && matchQ;
+  });
+
+  document.getElementById('browse-count').textContent =
+    `Showing ${filtered.length} of ${ACT.length + RULES.length} entries (${ACT.length} Act sections · ${RULES.length} Rules)`;
+
+  tbody.innerHTML = filtered.map(r => {
+    const st = getStatus(r.neo);
+    const typeLabel = r.type==='act'
+      ? `<span class="type-act">Act</span>`
+      : `<span class="type-rules">Rule</span>`;
+    const oldCls = r.type==='act' ? 'tag-act' : 'tag-rules';
+    const tealRow = r.type==='rules' ? 'teal-row' : '';
+    const neoDisplay = st==='normal'
+      ? `<span class="${oldCls}">${r.neo}</span>`
+      : st==='redundant' ? `<span class="tag-redundant">${r.neo}</span>`
+      : st==='omitted'   ? `<span class="tag-omitted">${r.neo}</span>`
+      : st==='new'       ? `<span class="tag-new-rule">${r.neo}</span>`
+      : `<span style="color:var(--blue)">${r.neo}</span>`;
+    const clickFn = r.type==='act'
+      ? `switchTab('act',document.getElementById('tab-act'));quickAct('${r.old.replace(/'/g,"\\'")}');`
+      : `switchTab('rules',document.getElementById('tab-rules'));quickRules('${r.old.replace(/'/g,"\\'")}');`;
+    return `<tr class="${tealRow}" onclick="${clickFn}">
+      <td class="td-type">${typeLabel}</td>
+      <td class="td-old ${oldCls}">${r.old}</td>
+      <td class="td-desc">${r.desc}</td>
+      <td class="td-new">${neoDisplay}</td>
+    </tr>`;
+  }).join('');
+}
+
+// update counts
+document.getElementById('cnt-act').textContent = ACT.length+'+';
+document.getElementById('cnt-rules').textContent = RULES.length;
+</script>
+</body>
+</html>
